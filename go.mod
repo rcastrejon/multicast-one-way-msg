@@ -1,4 +1,4 @@
-module github.com/rcastrejon/multicast-channels
+module github.com/rcastrejon/multicast-one-way-msg
 
 go 1.22.0
 

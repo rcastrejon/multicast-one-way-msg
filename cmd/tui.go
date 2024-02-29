@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/rcastrejon/multicast-channels/pkg/multicast"
+	"github.com/rcastrejon/multicast-one-way-msg/pkg/multicast"
 )
 
 var baseStyle = lipgloss.NewStyle().

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/rcastrejon/multicast-channels/pkg/multicast"
+	"github.com/rcastrejon/multicast-one-way-msg/pkg/multicast"
 	"github.com/spf13/cobra"
 )
 
