@@ -8,11 +8,11 @@ import (
 	"github.com/charmbracelet/bubbles/table"
 )
 
-type MulticastServer struct {
+type Server struct {
 	rooms map[string]*net.UDPConn
 }
 
-func NewMulticastServer(addrs map[string]string) (*MulticastServer, error) {
+func NewMulticastServer(addrs map[string]string) (*Server, error) {
 	rooms := make(map[string]*net.UDPConn, len(addrs))
 	for name, address := range addrs {
 		gaddr, err := net.ResolveUDPAddr("udp4", address)
@@ -25,16 +25,16 @@ func NewMulticastServer(addrs map[string]string) (*MulticastServer, error) {
 		}
 		rooms[name] = conn
 	}
-	return &MulticastServer{rooms}, nil
+	return &Server{rooms}, nil
 }
 
-func (s *MulticastServer) Close() {
+func (s *Server) Close() {
 	for _, conn := range s.rooms {
 		conn.Close()
 	}
 }
 
-func (s *MulticastServer) SendTo(name string, msg string) error {
+func (s *Server) SendTo(name string, msg string) error {
 	conn, ok := s.rooms[name]
 	if !ok {
 		return errors.New("channel not found")
@@ -43,7 +43,7 @@ func (s *MulticastServer) SendTo(name string, msg string) error {
 	return err
 }
 
-func (s *MulticastServer) BuildRoomsTable() ([]table.Column, []table.Row) {
+func (s *Server) BuildRoomsTable() ([]table.Column, []table.Row) {
 	columns := []table.Column{
 		{Title: "ID", Width: 4},
 		{Title: "Name", Width: 10},

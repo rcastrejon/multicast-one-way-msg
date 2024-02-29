@@ -16,14 +16,14 @@ var baseStyle = lipgloss.NewStyle().
 	BorderForeground(lipgloss.Color("240"))
 
 type model struct {
-	srv       *multicast.MulticastServer
+	srv       *multicast.Server
 	table     table.Model
 	textInput textinput.Model
 	chosen    bool
 	choice    string
 }
 
-func InitialModel(srv *multicast.MulticastServer) model {
+func InitialModel(srv *multicast.Server) model {
 	cols, rows := srv.BuildRoomsTable()
 
 	t := table.New(
