@@ -1,8 +1,7 @@
-package main
+package cmd
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/charmbracelet/bubbles/table"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -23,7 +22,7 @@ type model struct {
 	choice    string
 }
 
-func InitialModel(srv *multicast.Server) model {
+func initialModel(srv *multicast.Server) model {
 	cols, rows := srv.BuildRoomsTable()
 
 	t := table.New(
@@ -124,24 +123,4 @@ func chosenView(m model) string {
 		m.textInput.View(),
 		"(esc to go back)",
 	) + "\n"
-}
-
-func main() {
-	addrs := map[string]string{
-		"foo": "224.0.0.250:9999",
-		"bar": "224.0.0.249:9999",
-		"baz": "224.0.0.248:9999",
-		"qux": "224.0.0.247:9999",
-	}
-
-	srv, err := multicast.NewMulticastServer(addrs)
-	if err != nil {
-		log.Fatal("Error creating multicast server:", err)
-	}
-	defer srv.Close()
-
-	m := InitialModel(srv)
-	if _, err := tea.NewProgram(m).Run(); err != nil {
-		log.Fatal("Error running program:", err)
-	}
 }
