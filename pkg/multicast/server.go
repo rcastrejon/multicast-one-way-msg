@@ -3,6 +3,9 @@ package multicast
 import (
 	"errors"
 	"net"
+	"strconv"
+
+	"github.com/charmbracelet/bubbles/table"
 )
 
 type MulticastServer struct {
@@ -38,4 +41,19 @@ func (s *MulticastServer) SendTo(name string, msg string) error {
 	}
 	_, err := conn.Write([]byte(msg))
 	return err
+}
+
+func (s *MulticastServer) BuildRoomsTable() ([]table.Column, []table.Row) {
+	columns := []table.Column{
+		{Title: "ID", Width: 4},
+		{Title: "Name", Width: 10},
+		{Title: "Address", Width: 20},
+	}
+	rows := make([]table.Row, len(s.rooms))
+	i := 1
+	for name, address := range s.rooms {
+		rows[i-1] = table.Row{strconv.Itoa(i), name, address.RemoteAddr().String()}
+		i++
+	}
+	return columns, rows
 }
